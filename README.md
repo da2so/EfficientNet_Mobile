@@ -21,11 +21,9 @@ Then, you prepare runtime environment:
 
 ## Training
 
-### 0. Get 
 ### 1. Prepare your dataset
 
 # Step-by-step
-
 
 0. Clone this repository.
 
@@ -45,11 +43,9 @@ Then, you prepare runtime environment:
 2. Untar the "train" and "val" files. For example, I put the untarred files at `${HOME}/data/ILSVRC2012/`.
 
    ```shell
-   $ mkdir -p ${HOME}/data/ILSVRC2012
-   $ cd ${HOME}/data/ILSVRC2012
    $ mkdir train
    $ cd train
-   $ tar xvf ${HOME}/Downloads/ILSVRC2012_img_train.tar
+   $ tar xvf ../ILSVRC2012_img_train.tar
    $ find . -name "*.tar" | while read NAME ; do \
          mkdir -p "${NAME%.tar}"; \
          tar -xvf "${NAME}" -C "${NAME%.tar}"; \
@@ -58,35 +54,30 @@ Then, you prepare runtime environment:
    $ cd ..
    $ mkdir validation
    $ cd validation
-   $ tar xvf ${HOME}/Downloads/ILSVRC2012_img_val.tar
+   $ tar xvf ../ILSVRC2012_img_val.tar
    ```
 
-3. Clone this repository.
+4. Pre-process the validation image files. (The script would move the JPEG files into corresponding subfolders.)
 
    ```shell
-   $ git clone https://github.com/da2so/EfficientNet_Mobile.git
-   $ cd EfficientNet_Mobile
-   ```
-
-4. Pre-process the validation image files.  (The script would move the JPEG files into corresponding subfolders.)
-
-   ```shell
-   $ cd data
-   $ python3 ./preprocess_imagenet_validation_data.py \
-             ${HOME}/data/ILSVRC2012/validation \
+   $ cd ../../../data  # EfficientNet_Mobile/dataset/raw_data/validation -> EfficientNet_mobile/data
+   $ python  ./process_val.py \
+             ./dataset/raw_data/valiation/ \
              imagenet_2012_validation_synset_labels.txt
    ```
 
 5. Build TFRecord files for "train" and "validation".  (This step could take a couple of hours, since there are 1,281,167 training images and 50,000 validation images in total.)
 
    ```shell
-   $ mkdir ${HOME}/data/ILSVRC2012/tfrecords
-   $ python3 build_imagenet_data.py \
-             --output_directory ${HOME}/data/ILSVRC2012/tfrecords \
-             --train_directory ${HOME}/data/ILSVRC2012/train \
-             --validation_directory ${HOME}/data/ILSVRC2012/validation
+   $ cd .. 
+   $ mkdir /dataset/tfrecord/
+   $ python  convert2tfrecord.py \
+             --output_directory=./dataset/tfrecord/ \
+             --train_directory=./dataset/raw_data/train/ \
+             --validation_directory=./dataset/raw_data/val/
    ```
-Then 
+
+6. 
     # ImageNet dataset structure should be like this
     dataset/
         -raw_data/
@@ -103,4 +94,9 @@ Then
                 	-n01443537_*.JPEG
                 ...
         -tfrecord/
+            -train-00000-of-01024
+            -train-00001-of-01024
+            ...
+            -validation-00000-of-00128
+            -validation-00001-of-00128
     
