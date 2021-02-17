@@ -121,3 +121,11 @@ Arguments:
 
 
 
+
+### TODO
+
+* [x] Multi-GPU training
+* [ ] TFLite conversion
+* [ ] Comparing results between original and our EfficientNet
+* [ ] Train a model based on Tiny ImageNet
+
