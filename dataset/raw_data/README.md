@@ -31,18 +31,18 @@ Then, you prepare runtime environment:
 
    ```shell
    $ git clone https://github.com/da2so/EfficientNet_Mobile.git
-   $ cd EfficientNet_Mobile/dataset/raw_data
+   $ cd EfficientNet_Mobile/dataset/
    ```
 
-1. Download the "Training images (Task 1 & 2)" and "Validation images (all tasks)" from the [ImageNet Large Scale Visual Recognition Challenge 2012 (ILSVRC2012) download page](http://image-net.org/download) at `dataset/raw_data` directory.
+1. Download the "Training images (Task 1 & 2)" and "Validation images (all tasks)" from the [ImageNet Large Scale Visual Recognition Challenge 2012 (ILSVRC2012) download page](http://image-net.org/download) in `dataset` directory.
 
    ```shell
    $ ls -l ./
-   -rwxr-xr-x 1 shkang shkang 147897477120 Feb  14 14:55 ILSVRC2012_img_train.tar
-   -rwxr-xr-x 1 shkang shkang   6744924160 Feb  14 15:58 ILSVRC2012_img_val.tar
+   -rwxr-xr-x 1 jkjung jkjung 147897477120 Nov  7  2018 ILSVRC2012_img_train.tar
+   -rwxr-xr-x 1 jkjung jkjung   6744924160 Nov  7  2018 ILSVRC2012_img_val.tar
    ```
 
-2. Untar the "train" and "val" files. For example, I put the untarred files at `${HOME}/data/ILSVRC2012/`.
+2. Untar the "train" and "val" files.  For example, I put the untarred files at ${HOME}/data/ILSVRC2012/.
 
    ```shell
    $ mkdir -p ${HOME}/data/ILSVRC2012
