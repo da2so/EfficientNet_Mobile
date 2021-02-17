@@ -1,6 +1,6 @@
 # EfficientNet_Mobile
 
-Mobile friendly EfficientNet based on ImageNet with tensorflow keras
+Mobile friendly EfficientNet based on ImageNet dataset with tensorflow keras
 
 ![Python version support](https://img.shields.io/badge/python-3.6-blue.svg)
 ![Tensorflow version support](https://img.shields.io/badge/tensorflow-2.3.0-red.svg)
@@ -19,11 +19,11 @@ Then, you prepare runtime environment:
    pip install -r requirements.txt
    ```
 
-## Training
+## Use
 
 ### 1. Prepare your dataset
 
-# Step-by-step
+#### Step-by-step
 
 0. Clone this repository.
 
@@ -40,7 +40,7 @@ Then, you prepare runtime environment:
    -rwxr-xr-x 1 shkang shkang   6744924160 Feb  14 15:58 ILSVRC2012_img_val.tar
    ```
 
-2. Untar the "train" and "val" files. For example, I put the untarred files at `${HOME}/data/ILSVRC2012/`.
+2. Untar the "train" and "val" files. For example, I put the untarred files at `dataset/raw_data`.
 
    ```shell
    $ mkdir train
@@ -66,7 +66,7 @@ Then, you prepare runtime environment:
              imagenet_2012_validation_synset_labels.txt
    ```
 
-5. Build TFRecord files for "train" and "validation".  (This step could take a couple of hours, since there are 1,281,167 training images and 50,000 validation images in total.)
+5. Build TFRecord files for "train" and "validation". (This step could take a couple of hours, since there are 1,281,167 training images and 50,000 validation images in total.)
 
    ```shell
    $ cd .. 
@@ -77,26 +77,47 @@ Then, you prepare runtime environment:
              --validation_directory=./dataset/raw_data/val/
    ```
 
-6. 
-    # ImageNet dataset structure should be like this
-    dataset/
-        -raw_data/
-            -train/
-                -n01440764/
-                	-n01440764_*.JPEG
-                -n01443537/
-                	-n01443537_*.JPEG
-                ...
-            -val/
-                -n01440764/
-                	-n01440764_*.JPEG
-                -n01443537/
-                	-n01443537_*.JPEG
-                ...
-        -tfrecord/
-            -train-00000-of-01024
-            -train-00001-of-01024
-            ...
-            -validation-00000-of-00128
-            -validation-00001-of-00128
-    
+
+### 2. Train Mobile Friendly EfficientNet 
+
+Train mobile friendly EfficientNet based on ImageNet dataset
+
+   ```shell
+   $ CUDA_VISIBLE DEVICES=0 python train.py \
+                                   --imagenet_path=./dataset/tfrecord/ \
+                                   --model_name=EfficientNetB0_M \
+                                   --bs=16 \
+                                   --epochs=100 \
+                                   --lr=1e-2 \
+                                   --save_dir=./result/ \
+   ```
+
+
+#### Train Using Multi-GPU
+
+   ```shell
+   $ CUDA_VISIBLE DEVICES=0,1,2,3 python train.py \
+                                   --imagenet_path=./dataset/tfrecord/ \
+                                   --model_name=EfficientNetB0_M \
+                                   --bs=16 \
+                                   --epochs=100 \
+                                   --lr=1e-2 \
+                                   --save_dir=./result/ \
+   ```
+
+The total number of batch size will be (16 x The number of GPUs) = 16 x 4 = 64.
+
+
+Arguments:
+
+- `imagenet_path` - ImageNet dataset path
+- `model_name` - Name of Mobile friendly EfficientNet  
+  - Choices = ['EfficientNetB0_M', 'EfficientNetB1_M', 'EfficientNetB2_M', 'EfficientNetB3_M']
+- `bs` -  Batch size
+- `epochs` -  The number of epochs
+- `lr` - Learning rate
+- `save_dir` - Save directory for EfficientNet model
+
+
+
+
