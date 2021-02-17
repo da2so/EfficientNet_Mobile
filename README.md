@@ -7,7 +7,7 @@ Mobile friendly EfficientNet based on ImageNet dataset with tensorflow keras
 
 :star: Star us on GitHub — it helps!!
 
-Mobile friendly EfficientNet implementation for *[Here](https://blog.tensorflow.org/2020/03/higher-accuracy-on-vision-models-with-efficientnet-lite.html)*
+Mobile friendly EfficientNet is described in *[Here](https://blog.tensorflow.org/2020/03/higher-accuracy-on-vision-models-with-efficientnet-lite.html)*
 
 
 ## Install
